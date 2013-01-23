@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="ScratchFileReader" basedir="." default="build">
+	<property file="build.properties"/>
+	
+	<!-- cleanup -->
+	<target name="_clean-jar">
+		<delete quiet="true" dir="${build.dir}"/>
+		<delete quiet="true">
+			<fileset dir="${bin.dir}" includes="*.jar"/>
+		</delete>
+	</target>
+	<target name="_clean-classes">
+		<delete quiet="true" dir="${main.classes.dir}"/>
+	</target>
+	<target name="_clean-doc">
+		<delete quiet="true" dir="${doc.dir}"/>
+		<delete quiet="true" dir="${doc.developer.dir}"/>
+	</target>
+
+	<!-- Main code -->
+	<target name="_make-bindirs">
+		<mkdir dir="${main.classes.dir}"/>
+		<mkdir dir="${build.dir}"/>
+	</target>
+
+	<target name="compile-main" description="Compile the main code" depends="_make-bindirs">
+		<javac destdir="${main.classes.dir}" includeantruntime="false">
+			<src path="${main.src.dir}"/>
+		</javac>
+	</target>
+
+	<!-- Main targets -->
+	<target name="clean" description="Remove compiled classes" depends="_clean-jar, _clean-classes"/>
+	<target name="clobber" description="Remove all generated resources" depends="clean, _clean-doc"/>
+	<target name="compile" description="Compile all code" depends="compile-main"/>
+	
+	<target name="jar" description="Create ScratchFileReader Jar" depends="_clean-jar, _make-bindirs, compile-main">
+		<!-- Build standard jar -->
+		<copy todir="${build.dir}">
+			<fileset dir="${main.classes.dir}">
+				<include name="**/*.class"/>
+				<exclude name="com/roscopeco/deelang/Main*.class"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}">
+			<fileset dir="${basedir}">
+				<include name="LICENSE"/>
+			</fileset>
+		</copy>
+		<jar destfile="${bin.dir}/${jar.name}" basedir="${build.dir}" includes="**/*" manifest="${manifest.name}"/>
+	</target>
+
+	<target name="build" description="Perform a full, clean build" depends="clean, compile, jar"/>
+		
+	<!-- Generate documentation -->
+	<target name="doc" description="Generate Javadoc documentation" depends="compile">
+		<javadoc access="public" 
+		     author="true" 
+		       destdir="${doc.dir}" 
+		       doctitle="ScratchFileReader API" 
+		       nodeprecated="false" 
+		       nodeprecatedlist="false" 
+		       noindex="false" 
+		       nonavbar="false" 
+		       notree="false" 
+		       overview="LICENSE" 
+		       sourcepath="src" 
+		       splitindex="true" 
+		       use="true" 
+		       version="true">
+			<classpath path="${main.classes.dir}"/>
+		</javadoc>
+		<copy file="LICENSE" todir="${doc.dir}"/>
+	</target>	
+</project>
