@@ -4,10 +4,8 @@ import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.sql.Ref;
 
 import com.roscopeco.scratch.io.ObjectTable;
-
 
 public class ColorForm extends Form {
   private ScratchObject colorMap;
