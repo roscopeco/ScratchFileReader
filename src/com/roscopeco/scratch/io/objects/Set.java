@@ -34,14 +34,16 @@ implements Iterable<T>{
 
   @Override
   public ScratchObject resolve(ObjectTable table) {
-    super.resolve(table);
-    HashSet<ScratchObject> newSet = new HashSet<ScratchObject>();
-    
-    for (ScratchObject o : set) {
-      newSet.add(o.resolve(table));      
+    if (!isResolved()) {
+      super.resolve(table);
+      HashSet<ScratchObject> newSet = new HashSet<ScratchObject>();
+      
+      for (ScratchObject o : set) {
+        newSet.add(o.resolve(table));      
+      }
+      
+      set = newSet;
     }
-    
-    set = newSet;
     return this;
   }
   

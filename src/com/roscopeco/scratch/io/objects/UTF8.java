@@ -10,7 +10,7 @@ public class UTF8 extends ScratchString {
     int size = dis.readInt();
     byte[] buf = new byte[size];
     dis.read(buf);
-    string = new String(buf);
+    string = new String(buf, "UTF-8");
     logf("UTF8 string is `%s'\n", string);
   }
   

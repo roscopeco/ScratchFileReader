@@ -47,16 +47,18 @@ public class Dictionary extends ScratchObject {
 
   @Override
   public ScratchObject resolve(ObjectTable table) {
-    super.resolve(table);
-    
-    HashMap<ScratchObject, ScratchObject> newDict = new HashMap<ScratchObject, ScratchObject>();
-    
-    for (ScratchObject key : dict.keySet()) {
-      ScratchObject newKey = key.resolve(table);
-      ScratchObject newVal = dict.get(key).resolve(table);      
-      newDict.put(newKey, newVal);
+    if (!isResolved()) {
+      super.resolve(table);
+      
+      HashMap<ScratchObject, ScratchObject> newDict = new HashMap<ScratchObject, ScratchObject>();
+      
+      for (ScratchObject key : dict.keySet()) {
+        ScratchObject newKey = key.resolve(table);
+        ScratchObject newVal = dict.get(key).resolve(table);      
+        newDict.put(newKey, newVal);
+      }
+      dict = newDict;
     }
-    dict = newDict;
     
     return this;
   }

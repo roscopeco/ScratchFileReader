@@ -4,15 +4,16 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 public class TranslucentColor extends Color {
-  private final byte alpha;
+  private final int alpha;
   
   public TranslucentColor(DataInputStream dis) throws IOException {
     super(dis);
-    alpha = dis.readByte();
+    alpha = dis.readUnsignedByte();
     logf("  --> Alpha is %d\n", alpha);
   }
   
-  public byte alpha() {
+  @Override
+  public int alpha() {
     return alpha;
   }
 }

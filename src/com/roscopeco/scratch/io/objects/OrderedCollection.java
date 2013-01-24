@@ -30,9 +30,11 @@ implements Iterable<T> {
   @SuppressWarnings("unchecked")
   @Override
   public ScratchObject resolve(ObjectTable table) {
-    super.resolve(table);
-    for (int i = 0; i < data.length; i++) {
-      data[i] = (T)data[i].resolve(table);
+    if (!isResolved()) {
+      super.resolve(table);
+      for (int i = 0; i < data.length; i++) {
+        data[i] = (T)data[i].resolve(table);
+      }
     }
     return this;
   }

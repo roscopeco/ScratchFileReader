@@ -133,6 +133,10 @@ public abstract class ScratchObject {
     return this;
   }  
   
+  protected boolean isResolved() {
+    return resolved;
+  }
+  
   protected void guardResolved() {
     if (!resolved) {
       throw new IllegalStateException("Cannot perform operation on unresolved object");

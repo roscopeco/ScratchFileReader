@@ -1,7 +1,10 @@
 package com.roscopeco.scratch.io.objects;
 
+import java.awt.image.ColorModel;
+import java.awt.image.IndexColorModel;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.sql.Ref;
 
 import com.roscopeco.scratch.io.ObjectTable;
 
@@ -23,8 +26,32 @@ public class ColorForm extends Form {
     return super.resolve(table);
   }
 
-  public ScratchObject colorMap() {
+  @SuppressWarnings("unchecked")
+  public OrderedCollection<Color> colorMap() {
     guardResolved();
-    return colorMap;
+    return (OrderedCollection<Color>)colorMap;
+  }
+  
+  protected ColorModel createImageColorModel(int depth) {
+    if (colorMap == null) {
+      return super.createImageColorModel(depth);
+    } else {
+      return customColorMap(depth, colorMap());
+      //throw new UnsupportedOperationException("Color mapped forms are not yet supported");
+    }
+  }
+
+  IndexColorModel customColorMap(int paramInt, OrderedCollection<Color> map) {
+    logln("Creating IndexColorModel...");
+    byte[] bytes = new byte[4 * map.size()];
+    int i = 0;
+    for (Color color : map) {
+      bytes[(i++)] = ((byte) color.red());
+      bytes[(i++)] = ((byte) color.green());
+      bytes[(i++)] = ((byte) color.blue());
+      bytes[(i++)] = ((byte) color.alpha());
+    }
+    return new IndexColorModel(paramInt, map.size(),
+        bytes, 0, true, 0);
   }
 }

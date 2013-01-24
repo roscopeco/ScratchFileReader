@@ -13,8 +13,21 @@ public class Color extends ScratchObject {
   
   public int color() {
     return color;
+  }  
+  
+  public int red() {
+    return (color >> 22) & 0xFF;
   }
   
-  // TODO methods to return 10bit components
-
+  public int green() {
+    return (color >> 12) & 0xFF;
+  }
+  
+  public int blue() {
+    return (color >> 2) & 0xFF;
+  }
+  
+  public int alpha() {
+    return 255;
+  }
 }

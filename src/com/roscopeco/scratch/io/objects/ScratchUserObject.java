@@ -28,9 +28,11 @@ public abstract class ScratchUserObject extends ScratchObject {
   
   @Override
   public ScratchObject resolve(ObjectTable table) {
-    super.resolve(table);
-    for (int i = 0; i < fields.length; i++) {
-      fields[i] = fields[i].resolve(table);
+    if (!isResolved()) {
+      super.resolve(table);
+      for (int i = 0; i < fields.length; i++) {
+        fields[i] = fields[i].resolve(table);
+      }
     }
     return this;
   }
