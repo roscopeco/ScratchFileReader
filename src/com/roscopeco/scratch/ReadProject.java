@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 
 import com.roscopeco.scratch.io.ScratchProject;
 import com.roscopeco.scratch.io.objects.ColorForm;
@@ -16,17 +15,6 @@ import com.roscopeco.scratch.io.objects.ScratchStageMorph;
 import com.roscopeco.scratch.io.objects.ScratchString;
 
 public class ReadProject {
-  public static int[] byteToIntArray(byte[] bytes) {
-    int[] ints = new int[bytes.length / 4];
-    System.out.println(bytes.length);
-    System.out.println(bytes.length / 4);
-    int ip = 0;
-    for (int i = 0; i < ints.length; i++) {
-      ints[ip++] = (bytes[i++] << 24) | (bytes[i++] << 16) | (bytes[i++] << 8) | bytes[i];       
-    }
-    return ints;    
-  }
-  
   public static void main(String[] args) throws Exception {
     if (args.length != 1) {
       System.out.println("Usage: ReadProject <filename>");
