@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.roscopeco.scratch.io.objects.Dictionary;
+import com.roscopeco.scratch.io.objects.Form;
+import com.roscopeco.scratch.io.objects.ScratchObject;
 import com.roscopeco.scratch.io.objects.ScratchStageMorph;
 
 public final class ScratchProject {
@@ -25,7 +27,24 @@ public final class ScratchProject {
    */
   public static ScratchProject readProject(String filename) 
   throws FileNotFoundException, IOException, ScratchFormatException {
-    return readProject(new File(filename));    
+    return readProject(filename, false);
+  }
+  
+  /**
+   * Read a scratch project from the specified named file.
+   * 
+   * @param filename The filename to read from.
+   * @param preCacheMedia if true, Java media objects will be pre-cached.
+   * 
+   * @return A new ScratchProject.
+   * 
+   * @throws FileNotFoundException
+   * @throws IOException
+   * @throws ScratchFormatException
+   */
+  public static ScratchProject readProject(String filename, boolean preCacheMedia) 
+  throws FileNotFoundException, IOException, ScratchFormatException {
+    return readProject(new File(filename), preCacheMedia);
   }
   
   /**
@@ -40,14 +59,31 @@ public final class ScratchProject {
    */
   public static ScratchProject readProject(File file) 
   throws FileNotFoundException, IOException, ScratchFormatException {
+    return readProject(file, false);
+  }
+  
+  /**
+   * Read a scratch project from the specified File. 
+   * 
+   * @param file The file to read from.
+   * @param preCacheMedia if true, Java media objects will be pre-cached.
+   * 
+   * @return A new ScratchProject.
+   * 
+   * @throws FileNotFoundException
+   * @throws IOException
+   * @throws ScratchFormatException
+   */
+  public static ScratchProject readProject(File file, boolean preCacheMedia) 
+  throws FileNotFoundException, IOException, ScratchFormatException {
     InputStream strm = new FileInputStream(file);
     try {
-      return readProject(new FileInputStream(file));
+      return readProject(new FileInputStream(file), preCacheMedia);
     } finally {
       strm.close();
     }
   }
-  
+
   /**
    * Read a scratch project from the specified InputStream.
    * 
@@ -58,6 +94,22 @@ public final class ScratchProject {
    * @throws ScratchFormatException
    */
   public static ScratchProject readProject(InputStream stream) 
+  throws IOException, ScratchFormatException {        
+    return readProject(stream, false);
+  }
+  
+  /**
+   * Read a scratch project from the specified InputStream.
+   * 
+   * @param stream The stream. Note that this will NOT be closed after reading!
+   * @param preCacheMedia if true, Java media objects will be pre-cached.
+   * 
+   * @return A new ScratchProject.
+   * 
+   * @throws IOException
+   * @throws ScratchFormatException
+   */
+  public static ScratchProject readProject(InputStream stream, boolean preCacheMedia) 
   throws IOException, ScratchFormatException {        
     DataInputStream dis = new DataInputStream(stream);
     
@@ -75,8 +127,16 @@ public final class ScratchProject {
     ObjectTable infoTable = ObjectTable.readObjectTable(dis);
     ObjectTable contentTable = ObjectTable.readObjectTable(dis);
     
+    // Resolve tables
     infoTable.resolve();
     contentTable.resolve();
+    
+    if (preCacheMedia) {
+      // Create Java images (TODO sounds later?)
+      for (ScratchObject o : infoTable) {
+        if (o instanceof Form) ((Form)o).getImage();
+      }
+    }
     
     return new ScratchProject(infoTable, contentTable);
   }
