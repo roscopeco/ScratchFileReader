@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import com.roscopeco.scratch.io.ObjectTable;
 
-
-
 public class ScriptableScratchMorph extends Morph {
   protected static final int FIRST_SUBCLASS_FIELD = Morph.FIRST_SUBCLASS_FIELD + 6;
   
@@ -26,9 +24,9 @@ public class ScriptableScratchMorph extends Morph {
   }
 
   @SuppressWarnings("unchecked")
-  public Array<ScratchObject> blocksBin() {
+  public Array<Array<ScratchObject>> blocksBin() {
     guardResolved();
-    return (Array<ScratchObject>)fields[Morph.FIRST_SUBCLASS_FIELD + 2];
+    return (Array<Array<ScratchObject>>)fields[Morph.FIRST_SUBCLASS_FIELD + 2];
   }
 
   public ScratchBool isClone() {

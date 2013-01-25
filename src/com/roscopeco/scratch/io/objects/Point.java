@@ -19,14 +19,14 @@ public class Point extends ScratchObject {
     logln("Read point");
   }
   
-  public ScratchObject x() {
+  public Numeric x() {
     guardResolved();
-    return x;
+    return (Numeric)x;
   }
 
-  public ScratchObject y() {
+  public Numeric y() {
     guardResolved();
-    return y;
+    return (Numeric)y;
   }
 
   @Override
