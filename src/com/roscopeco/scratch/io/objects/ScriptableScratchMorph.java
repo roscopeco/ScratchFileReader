@@ -35,9 +35,9 @@ public class ScriptableScratchMorph extends Morph {
   }
 
   @SuppressWarnings("unchecked")
-  public OrderedCollection<ScratchObject> media() {
+  public OrderedCollection<ScratchMedia> media() {
     guardResolved();
-    return (OrderedCollection<ScratchObject>)fields[Morph.FIRST_SUBCLASS_FIELD + 4];
+    return (OrderedCollection<ScratchMedia>)fields[Morph.FIRST_SUBCLASS_FIELD + 4];
   }
 
   public ImageMedia costume() {

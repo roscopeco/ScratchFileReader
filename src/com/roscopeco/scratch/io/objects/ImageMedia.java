@@ -30,10 +30,9 @@ public class ImageMedia extends ScratchMedia {
     return fields[ScratchMedia.FIRST_SUBCLASS_FIELD + 2];
   }
 
-  // TODO actual type (probably bytearray?)
-  public ScratchObject jpegBytes() {
+  public ByteArray jpegBytes() {
     guardResolved();
-    return fields[ScratchMedia.FIRST_SUBCLASS_FIELD + 3];
+    return (ByteArray)fields[ScratchMedia.FIRST_SUBCLASS_FIELD + 3];
   }
 
   public Form compositeForm() {

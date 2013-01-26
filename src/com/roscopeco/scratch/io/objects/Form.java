@@ -2,7 +2,6 @@
 
 package com.roscopeco.scratch.io.objects;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.IndexColorModel;
@@ -74,7 +73,7 @@ public class Form extends ScratchObject {
     return squeakColorMap(depth);
   }
   
-  public Image getImage() {
+  public BufferedImage getImage() {
     if (imageCache != null) {
       return imageCache;
     } else {
