@@ -7,47 +7,47 @@ import com.roscopeco.scratch.io.ObjectTable;
 
 
 public class Rectangle extends ScratchObject {
-  private ScratchObject x, y, w, h;
+  private ScratchObject x1, y1, x2, y2;
 
   public Rectangle(ObjectTable table, DataInputStream dis)
   throws IOException, UnsupportedTypeException {
     logln("Reading rectangle");
     
-    x = ScratchObject.read(table, dis);
-    y = ScratchObject.read(table, dis);
-    w = ScratchObject.read(table, dis);
-    h = ScratchObject.read(table, dis);
+    x1 = ScratchObject.read(table, dis);
+    y1 = ScratchObject.read(table, dis);
+    x2 = ScratchObject.read(table, dis);
+    y2 = ScratchObject.read(table, dis);
     
     logln("Read rectangle");
   }
   
-  public ScratchObject x() {
+  public Numeric x1() {
     guardResolved();
-    return x;
+    return (Numeric)x1;
   }
 
-  public ScratchObject y() {
+  public Numeric y1() {
     guardResolved();
-    return y;
+    return (Numeric)y1;
   }
 
-  public ScratchObject w() {
+  public Numeric x2() {
     guardResolved();
-    return w;
+    return (Numeric)x2;
   }
 
-  public ScratchObject h() {
+  public Numeric y2() {
     guardResolved();
-    return h;
+    return (Numeric)y2;
   }
 
   @Override
   public ScratchObject resolve(ObjectTable table) {
     super.resolve(table);
-    x = x.resolve(table);
-    y = y.resolve(table);
-    w = w.resolve(table);
-    h = h.resolve(table);
+    x1 = x1.resolve(table);
+    y1 = y1.resolve(table);
+    x2 = x2.resolve(table);
+    y2 = y2.resolve(table);
     return this;
   }
 }
