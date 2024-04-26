@@ -1,3 +1,5 @@
+> **note**: This repository is archived and development / support is discontinued.
+
 Scratch File Reader (Read Scratch project files in Java)
 ========================================================
 
